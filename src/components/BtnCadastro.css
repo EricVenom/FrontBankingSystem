@@ -1,0 +1,21 @@
+.btn-cadastro {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 2rem;
+    padding: 1.5rem;
+    background-color: rgb(21, 155, 191);
+    color: rgb(43, 43, 43);
+    border: none;
+    box-shadow: 2px 2px 2px grey;
+    border-radius: 7px;
+
+    cursor: pointer;
+}
+
+.btn-cadastro:hover {
+    background-color: rgba(15, 111, 138, 0.8);
+    box-shadow: 2px 2px 2px rgb(87, 87, 87);
+}
+

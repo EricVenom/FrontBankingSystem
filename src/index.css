@@ -1,0 +1,37 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto Mono", monospace;
+  font-size: 1rem;
+}
+
+body {}
+
+h1 {
+  font-size: xx-large;
+  font-family: "Inter", sans-serif;
+  font-weight: 900;
+  text-transform: uppercase;
+  font-optical-sizing: auto;
+}
+
+h2 {
+  font-weight: bold;
+  font-size: larger;
+  font-family: "Inter", sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  font-optical-sizing: auto;
+}
+
+button {
+  font-weight: 700;
+  font-size: medium;
+}
+
+a {
+  text-decoration: underline;
+  color: rgb(21, 155, 191);
+  font-weight: 700;
+}
