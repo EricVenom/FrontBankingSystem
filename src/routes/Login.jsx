@@ -1,4 +1,5 @@
 import "./Login.css";
+import { useNavigate } from 'react-router-dom';
 import BtnCadastro from "../components/BtnCadastro";
 import AccentureLogo from "../assets/logo.png";
 import { useState } from "react";
@@ -6,7 +7,7 @@ import { setCookie } from "../utils/storage.js"
 import api from '../services/api';
 
 export default function LoginPage() {
-
+	const navigate = useNavigate();
 	const [error, setError] = useState(false);
 	const [user, setUser] = useState(
 		{
@@ -35,6 +36,8 @@ export default function LoginPage() {
 
 				setCookie("auth", data.token, 1);
 				setCookie("authRefresh", data.tokenRefresh, 15);
+
+				navigate("/dashboard");
 			} catch (e) {
 				setError(true);
 				console.error(e)
