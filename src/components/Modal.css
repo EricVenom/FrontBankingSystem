@@ -30,7 +30,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-evenly;
+
     gap: 1.5rem;
     padding: 2.1rem;
 
@@ -82,6 +82,28 @@ fieldset {
     gap: .7rem;
 }
 
+fieldset section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+fieldset section .stepper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: lightgray;
+    border: 1px solid rgb(141, 148, 156);
+}
+
+fieldset section .stepper#step-active {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: green;
+    border: 1px solid rgb(54, 189, 54);
+}
+
 fieldset input {
     height: 2rem;
     padding: 1.5rem;
@@ -106,9 +128,14 @@ fieldset label {
     align-items: center;
     gap: 1rem;
     justify-content: space-between;
+    text-align: justify;
 }
 
 a {
     text-align: center;
     font-size: small;
+}
+
+a:first-of-type {
+    text-align: end;
 }
