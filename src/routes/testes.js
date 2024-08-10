@@ -1,0 +1,5 @@
+import { getCookie } from "../utils/storage.js";
+const name = 'auth=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoLWFwaSIsInN1YiI6Im1hcmlhZG9zb2NvcnJvQGVtYWlsLmNvbSIsImV4cCI6MTcyMzI5NDQxOX0.Hh6dnvlmHxTdtWXOrwcRsAVc1KiBzZy4ekvuXSF3Ng0; authRefresh=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoLWFwaSIsInVzZXIiOiJtYXJpYWRvc29jb3Jyb0BlbWFpbC5jb20iLCJjb2RlQWNjZXNzIjoiOTk5MmRiMzgtMDBlMC05M2JjLTFiYmMtNzZmMzkzMjY4NThhIiwiZXhwIjoxNzI0NTQ3MjE5LCJpc1JlZnJlc2hUb2tlbiI6dHJ1ZX0.jrvoM38xOqSDn25RuFYd4wnJxUZH4yyB58xe9dmA76c'
+const cookie = getCookie(name);
+
+console.log(cookie)

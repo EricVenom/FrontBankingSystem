@@ -89,6 +89,18 @@ fieldset input {
     border: 1px solid lightgray;
 }
 
+fieldset input:focus {
+    outline: 2px solid rgb(21, 155, 191);
+    background-color: light-dark(rgb(232, 240, 254), rgba(70, 90, 126, 0.4)) !important;
+}
+
+fieldset input:-internal-autofill-selected {
+    appearance: menulist-button;
+    background-image: none !important;
+    background-color: light-dark(rgb(232, 240, 254), rgba(70, 90, 126, 0.4)) !important;
+    color: fieldtext !important;
+}
+
 fieldset label {
     display: flex;
     align-items: center;

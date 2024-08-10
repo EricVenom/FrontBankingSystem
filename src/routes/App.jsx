@@ -1,9 +1,10 @@
-import accentureLogo from '../assets/logo.png'
-import BtnLogin from '../components/BtnLogin'
-import BtnCadastro from '../components/BtnCadastro'
-import Modal from '../components/Modal'
-import { useState } from 'react'
-import './App.css'
+import accentureLogo from '../assets/logo.png';
+import BtnLogin from '../components/BtnLogin';
+import BtnCadastro from '../components/BtnCadastro';
+import Modal from '../components/Modal';
+import { useState } from 'react';
+import './App.css';
+
 
 function App() {
   const [modalActive, setModalActive] = useState(false);
@@ -23,6 +24,7 @@ function App() {
           <article>
             <h1>Muda pro ACC Bank e dê uma turbinada no seu dinheiro</h1>
             <BtnCadastro textoDoBotao="Abra sua conta ➔" setModalActive={setModalActive} />
+
             {modalActive && <Modal setModalActive={setModalActive} />}
           </article>
 
