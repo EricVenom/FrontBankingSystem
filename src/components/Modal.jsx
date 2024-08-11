@@ -10,12 +10,14 @@ import FormularioEndereco from './FormularioEndereco';
 import FormularioCliente from './FormularioCliente';
 import LinearIndeterminate from './LinearIndeterminate';
 import { useNavigate } from 'react-router-dom';
+import { validate } from 'gerador-validador-cpf';
 
 const steps = ["Crie seu usuário", "Informe seu endereço", "Preencha seu perfil com seus dados pessoais"];
 
 function Modal({ setModalActive }) {
   const [loader, setLoader] = useState(false);
   const [step, setStep] = useState(1);
+  const [formError, setFormError] = useState(false);
   const navigate = useNavigate();
 
   const nextStep = () => {
@@ -100,15 +102,22 @@ function Modal({ setModalActive }) {
     }
   }
 
+  const [errorMessage, setErrorMessage] = useState("");
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoader(true);
+    const isCpfValid = validate(user.cpf);
+    if (!isCpfValid) {
+      setErrorMessage("CPF inválido.");
+    }
 
     if (user.agree
+      && validate(user.cpf)
       && user.cpf.length === 11
       && user.telephone.length === 11
       && user.cep.length === 8) {
       try {
+        setLoader(true);
         const { data: addressData, status: addressStatus } = await cep.get(`/${user.cep}/json`);
         const { email, password, password2 } = user;
 
@@ -119,15 +128,17 @@ function Modal({ setModalActive }) {
 
           console.log("Cliente cadastrado com sucesso:", client);
           setTimeout(() => {
-            navigate('/dashboard')
+            navigate('/login')
           }, 5000)
         } else {
-          throw new Error("Senhas não conferem ou CEP inválido.");
+          throw new Error("Erro ao preencher formulário.");
         }
-
       } catch (error) {
+        setLoader(false);
         console.log("Erro durante o cadastro:", error.message);
       }
+    } else {
+      setFormError(true);
     }
   }
 
@@ -148,7 +159,7 @@ function Modal({ setModalActive }) {
             {step === 1 && <FormularioUsuario user={user} setUser={setUser} />}
             {step === 2 && <FormularioEndereco user={user} setUser={setUser} />}
             {step === 3 && <FormularioCliente user={user} setUser={setUser} />}
-
+            <span style={{ color: "red" }}>{formError && errorMessage}</span>
             <section>
               {step === 1 ? <div className="stepper" id="step-active"></div> : <div className="stepper"></div>}
               {step === 2 ? <div className="stepper" id="step-active"></div> : <div className="stepper"></div>}
@@ -158,6 +169,7 @@ function Modal({ setModalActive }) {
               {step === 1 ? <Button variant='outlined' disabled>Voltar</Button> : <Button variant='outlined' onClick={prevStep}>Voltar</Button>}
               {step === 3 ? <Button variant='contained' disabled>Avançar</Button> : <Button variant='contained' onClick={nextStep}>Avançar</Button>}
             </section>
+
             <br />
             {loader && <LinearIndeterminate />}
             <label htmlFor="agree">
