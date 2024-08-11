@@ -2,7 +2,8 @@ import "./Login.css";
 import { useNavigate } from 'react-router-dom';
 import BtnCadastro from "../components/BtnCadastro";
 import AccentureLogo from "../assets/logo.png";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { loggedUserContext } from '../contexts/UserContext.jsx'
 import { setCookie } from "../utils/storage.js"
 import api from '../services/api';
 
@@ -15,18 +16,12 @@ export default function LoginPage() {
 			password: ""
 		}
 	)
-
+	const { setLoggedUser } = useContext(loggedUserContext);
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		setError(false);
 		const { email, password } = user;
-
-		setUser({
-			email: "",
-			password: ""
-		})
-
 		if (email && password) {
 			try {
 				const { data } = await api.post('/auth', {
@@ -37,6 +32,8 @@ export default function LoginPage() {
 				setCookie("auth", data.token, 1);
 				setCookie("authRefresh", data.tokenRefresh, 15);
 
+				localStorage.setItem('loggedUser', JSON.stringify({ email }));
+				setLoggedUser({ email });
 				navigate("/dashboard");
 			} catch (e) {
 				setError(true);
@@ -44,6 +41,10 @@ export default function LoginPage() {
 			}
 		}
 
+		setUser({
+			email: "",
+			password: ""
+		})
 	}
 
 	return (
