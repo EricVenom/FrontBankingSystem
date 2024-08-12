@@ -8,6 +8,7 @@ import ErrorPage from './error-page'
 import LoginPage from './routes/Login'
 import Dashboard from './routes/Dashboard'
 import Home from './routes/Home'
+import PrivateRoute from './routes/PrivateRoute'
 
 const router = createBrowserRouter([
   {
@@ -21,7 +22,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard/",
-    element: <Dashboard />,
+    element: (
+      <PrivateRoute>
+        <Dashboard />
+      </PrivateRoute>
+    ),
     children: [
       {
         path: "/dashboard/",
