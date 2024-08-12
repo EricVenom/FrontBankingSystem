@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect } from 'react';
 
 export const loggedUserContext = createContext({
-    email: "", password: ""
+    email: ""
 });
 
 export const LoggedUserContextProvider = ({ children }) => {

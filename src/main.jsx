@@ -7,6 +7,7 @@ import './index.css'
 import ErrorPage from './error-page'
 import LoginPage from './routes/Login'
 import Dashboard from './routes/Dashboard'
+import Home from './routes/Home'
 
 const router = createBrowserRouter([
   {
@@ -24,7 +25,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/dashboard/",
-        element: <h1>Mostrando extrato, historico de transações!!</h1>
+        element: <Home />
       },
       {
         path: "/dashboard/transactions/withdraw",
