@@ -79,6 +79,8 @@ export default function Home() {
             <Card key={e.id} type={e.accountType} balance={e.balance} />
           )
         })}
+
+        <Card pix={true} />
         <span>{error && errorMessage}</span>
       </section>
       <section className="bank-log">
