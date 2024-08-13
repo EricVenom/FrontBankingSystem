@@ -76,7 +76,6 @@ export default function Home() {
             .map(response => response.data)
             .flat(); // combinar os arrays de transações
 
-
           setTransactions(allTransactions);
         }
       } catch (error) {
