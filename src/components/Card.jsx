@@ -16,9 +16,11 @@ export default function Card({ pix, type, balance }) {
                 <span>{type === "CURRENT" ? "CONTA CORRENTE" : "POUPANÇA"}</span>
             </div>}
 
-            {pix && <>
-                <h1>Área pix</h1>
-            </>
+            {pix && <div className="bank-card">
+                <span>Área pix</span><br />
+                <strong>Pagar</strong><br />
+                <strong>Gerenciar chaves: ver todas, criar e deletar</strong>
+            </div>
 
             }
         </>

@@ -62,7 +62,7 @@ export default function Dashboard() {
               <Link to={"/dashboard/transactions/deposit"}>Deposito</Link>
             </li>
             <li>
-              <Link to={"/dashboard/transactions/transfer"}>Transferencia</Link>
+              <Link to={"/dashboard/transactions/transfer"}>TED</Link>
             </li>
           </ul>
         </nav>
