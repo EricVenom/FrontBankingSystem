@@ -13,16 +13,39 @@ export default function ProfileModal({ setIsModalActive }) {
         }
     }
 
+    const formatCPF = (cpf) => {
+        // XXX.XXX.XXX-XX
+        return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+    };
+
+    const formatPhone = (phone) => {
+        // (XX) XXXXX-XXXX ou (XX) XXXX-XXXX
+        return phone.length === 11
+            ? phone.replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3")
+            : phone.replace(/(\d{2})(\d{4})(\d{4})/, "($1) $2-$3");
+    };
+
     return (
         <div className="backdrop" onClick={clickHandler}>
             <section className="client-profile">
-                <ul>
-                    <li>{loggedUser?.name}</li>
-                    <li>{loggedUser?.email}</li>
-                    <li>{loggedUser?.cpf}</li>
-                    <li>{loggedUser?.telephone}</li>
-                    <li><Button><LogoutIcon /> Sair</Button></li>
-                </ul>
+                <div className="client-id">
+                    <strong>{loggedUser?.name}</strong>
+                    <span>{loggedUser?.email}</span>
+                </div>
+
+                <div className="client-cmc">
+                    <div>
+                        CPF: <br />
+                        {loggedUser?.cpf && formatCPF(loggedUser?.cpf)}
+                    </div>
+
+                    <div>
+                        Celular: <br />
+                        {loggedUser?.telephone && formatPhone(loggedUser?.telephone)}
+                    </div>
+                </div>
+                <li><Button size="small" variant="outlined" sx={{ marginTop: "1rem", width: "100%", gap: ".5rem" }}><LogoutIcon /> Sair</Button></li>
+
             </section>
         </div>
     )
