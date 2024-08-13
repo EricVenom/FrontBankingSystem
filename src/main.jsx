@@ -10,6 +10,7 @@ import Dashboard from './routes/Dashboard';
 import Home from './routes/Home';
 import Deposito from './routes/Deposito';
 import PrivateRoute from './routes/PrivateRoute';
+import Saque from './routes/Saque';
 
 const router = createBrowserRouter([
   {
@@ -35,7 +36,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashboard/transactions/withdraw",
-        element: <h1>PAGINA DE SAQUE</h1>
+        element: <Saque />
       },
       {
         path: "/dashboard/transactions/deposit",

@@ -33,7 +33,4 @@ li {
 #detail {
     margin: 3rem 4rem;
     display: flex;
-    gap: 1rem;
-    border: 3px solid red;
-    height: 100%;
 }

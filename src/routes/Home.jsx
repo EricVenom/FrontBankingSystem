@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from 'react';
 import { loggedUserContext } from '../contexts/UserContext';
 import api from '../services/api'
 import { getCookie } from '../utils/storage';
+import BasicTable from '../components/BasicTable';
 
 export default function Home() {
   const { loggedUser } = useContext(loggedUserContext);
@@ -81,8 +82,9 @@ export default function Home() {
         <span>{error && errorMessage}</span>
       </section>
       <section className="bank-log">
-        <h1>Ultimas movimentações</h1>
+        <h3>Ultimas movimentações</h3>
         {transactions.length === 0 && "Ainda não há transações."}
+        <BasicTable transactions={transactions} />
       </section>
     </section>
   )

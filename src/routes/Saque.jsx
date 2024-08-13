@@ -1,11 +1,12 @@
-import { Button } from '@mui/material';
-import "./Deposito.css";
+import "./Saque.css";
+import { useState } from 'react'
 import LinearIndeterminate from '../components/LinearIndeterminate';
 import api from '../services/api';
-import { useState } from 'react';
 import { getCookie } from "../utils/storage";
+import { Button } from '@mui/material';
 
-export default function () {
+export default function Saque() {
+
     const [depositData, setDepositData] = useState({
         accountType: "",
         value: 0
@@ -16,7 +17,7 @@ export default function () {
         e.preventDefault();
         try {
             setLoading(true);
-            const { status } = await api.post("/transaction/deposit", {
+            const { status } = await api.post("/transaction/withdraw", {
                 accountType: depositData.accountType,
                 value: depositData.value
             }, {
@@ -35,8 +36,8 @@ export default function () {
     return (
         <>
             <form className="deposito">
-                <h2>Depósito</h2>
-                <label>Informe a quantidade que deseja depositar:</label>
+                <h2>Saque</h2>
+                <label>Informe a quantidade que deseja sacar:</label>
                 <input
                     type="number"
                     placeholder='(Máx. 1000R$)'
@@ -55,7 +56,7 @@ export default function () {
                     <option value="SAVINGS">2. Poupança</option>
                 </select><br />
 
-                <Button variant='text' onClick={handleSubmit}>Depositar</Button>
+                <Button variant='text' onClick={handleSubmit}>Sacar</Button>
                 {loading && <LinearIndeterminate />}
             </form>
         </>
