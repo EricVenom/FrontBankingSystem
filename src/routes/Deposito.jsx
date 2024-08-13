@@ -40,12 +40,16 @@ export default function () {
                     type="number"
                     placeholder='(Máx. 1000R$)'
                     onChange={e => setDepositData({ ...depositData, value: e.target.value })}
+                    onInput={(e) => {
+                        e.target.value = e.target.value.replace(/\D/g, '');
+                    }}
                 /><br />
 
                 <label>Qual o tipo da conta?</label>
                 <select
                     onChange={e => setDepositData({ ...depositData, accountType: e.target.value })}
                 >
+                    <option value=""></option>
                     <option value="CURRENT">1. Conta Corrente</option>
                     <option value="SAVINGS">2. Poupança</option>
                 </select><br />
