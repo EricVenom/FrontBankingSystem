@@ -28,30 +28,12 @@ export default function Home() {
     const getClientBankAccounts = async (id) => {
       try {
         const { data } = await api.get(`/account/client/${id}`);
-        // console.log(data); // dados da conta 
         return data;
       } catch (error) {
         setErrorMessage("Erro ao tentar pegar dados do banco.");
         console.error(error);
       }
     }
-
-    const fetchTransactions = async () => {
-      try {
-        if (bankAccounts.length > 0) {
-          const { data } = await api.get(`/transaction/${bankAccounts[0].id}`, {
-            headers: {
-              Authorization: `Bearer ${getCookie("auth")}`
-            }
-          });
-          data && setTransactions(data)
-        }
-        console.log("Transações:", transactions);
-      } catch (error) {
-        console.error("Erro ao buscar transações:", error);
-      }
-    };
-
 
     const loadClientAndAccounts = async () => {
       if (loggedUser?.email) {
@@ -65,8 +47,27 @@ export default function Home() {
     }
 
     loadClientAndAccounts();
-    fetchTransactions();
   }, [loggedUser?.email]);
+
+  useEffect(() => {
+    const fetchTransactions = async () => {
+      try {
+        if (bankAccounts.length > 0) {
+          const { data } = await api.get(`/transaction/${bankAccounts[0].id}`, {
+            headers: {
+              Authorization: `Bearer ${getCookie("auth")}`
+            }
+          });
+          if (data) setTransactions(data);
+        }
+        console.log("Transações:", transactions);
+      } catch (error) {
+        console.error("Erro ao buscar transações:", error);
+      }
+    };
+
+    fetchTransactions();
+  }, [bankAccounts]);
 
   return (
     <section className="home-container">
