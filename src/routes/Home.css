@@ -1,0 +1,14 @@
+.home-container {
+    height: 100%;
+}
+
+.bank-info {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.bank-log {
+    border: 1px solid green;
+    height: 100%;
+}

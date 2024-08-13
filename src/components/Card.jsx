@@ -3,16 +3,17 @@ import { useContext } from 'react'
 import api from '../services/api'
 import './Card.css';
 
-export default function Card({ balance }) {
-    const { loggedUser } = useContext(loggedUserContext);
+export default function Card({ type, balance }) {
 
     return (
         <>
             <div className="bank-card">
                 <span>Saldo: <br />
-                    {balance ? balance : "00,00"}R$
+                    <strong>
+                        {balance ? balance : "00,00"}R$
+                    </strong>
                 </span> <br />
-                <span>{loggedUser?.email}</span>
+                <span>{type === "CURRENT" ? "CONTA CORRENTE" : "POUPANÇA"}</span>
             </div>
         </>
     )

@@ -6,6 +6,7 @@ import { useContext, useEffect, useState } from 'react';
 import api from '../services/api';
 import HomeIcon from '@mui/icons-material/Home';
 import LogoutIcon from '@mui/icons-material/Logout';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { loggedUserContext } from '../contexts/UserContext';
 
 export default function Dashboard() {
@@ -43,8 +44,7 @@ export default function Dashboard() {
       <header>
         <h1>ACCBANK</h1>
         <section>
-          <span>O</span>
-          <span>P</span>
+          <Button variant="outlined"><AccountCircleIcon /></Button>
           <Button><LogoutIcon /></Button>
         </section>
       </header>
@@ -67,7 +67,9 @@ export default function Dashboard() {
           </ul>
         </nav>
       </section>
-      <div id="detail"><Outlet /></div>
+      <div id="detail">
+        <Outlet />
+      </div>
     </div >
   )
 }

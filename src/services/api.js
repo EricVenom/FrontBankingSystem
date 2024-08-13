@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export default axios.create({
-    baseURL: 'http://localhost:8080',
+    baseURL: 'https://banksystem-1-0.onrender.com',
     timeout: 10000,
     headers: { 'Content-Type': 'application/json' }
 });

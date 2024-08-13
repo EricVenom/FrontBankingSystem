@@ -10,11 +10,14 @@ header,
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 10vh;
-    padding: 0 2rem;
-    border-bottom: 1px solid rgb(183, 196, 209);
+    height: 11vh;
+    padding: 0 4rem;
+    border-bottom: 2px solid rgb(94, 94, 94, .1);
 }
 
+.fake-header {
+    box-shadow: 0px 20px 40px -30px rgb(94, 94, 94);
+}
 
 nav ul {
     display: flex;
@@ -28,7 +31,9 @@ li {
 }
 
 #detail {
-    margin: 2rem;
-    border: 1px dashed green;
+    margin: 3rem 4rem;
+    display: flex;
+    gap: 1rem;
+    border: 3px solid red;
     height: 100%;
 }

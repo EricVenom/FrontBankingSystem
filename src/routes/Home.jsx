@@ -4,6 +4,7 @@ import CreateBankAccount from '../components/CreateBankAccount';
 import { useContext, useEffect, useState } from 'react';
 import { loggedUserContext } from '../contexts/UserContext';
 import api from '../services/api'
+import { getCookie } from '../utils/storage';
 
 export default function Home() {
   const { loggedUser } = useContext(loggedUserContext);
@@ -11,6 +12,7 @@ export default function Home() {
   const [errorMessage, setErrorMessage] = useState("");
   const [client, setClient] = useState({});
   const [bankAccounts, setBankAccounts] = useState([]);
+  const [transactions, setTransactions] = useState([]);
 
   useEffect(() => {
     const getClientInfo = async (email) => {
@@ -34,6 +36,23 @@ export default function Home() {
       }
     }
 
+    const fetchTransactions = async () => {
+      try {
+        if (bankAccounts.length > 0) {
+          const { data } = await api.get(`/transaction/${bankAccounts[0].id}`, {
+            headers: {
+              Authorization: `Bearer ${getCookie("auth")}`
+            }
+          });
+          data && setTransactions(data)
+        }
+        console.log("Transações:", transactions);
+      } catch (error) {
+        console.error("Erro ao buscar transações:", error);
+      }
+    };
+
+
     const loadClientAndAccounts = async () => {
       if (loggedUser?.email) {
         const clientData = await getClientInfo(loggedUser.email);
@@ -41,19 +60,29 @@ export default function Home() {
           setClient(clientData);
           const accounts = await getClientBankAccounts(clientData.id);
           accounts && setBankAccounts(accounts);
-          console.log(bankAccounts)
         }
       }
     }
 
     loadClientAndAccounts();
+    fetchTransactions();
   }, [loggedUser?.email]);
 
-
   return (
-    <>
-      {bankAccounts.length === 0 ? <CreateBankAccount /> : <Card />}
-      <span>{error && errorMessage}</span>
-    </>
+    <section className="home-container">
+      <section className="bank-info">
+        {bankAccounts.length === 0 && <CreateBankAccount />}
+        {bankAccounts.map((e) => {
+          return (
+            <Card key={e.id} type={e.accountType} balance={e.balance} />
+          )
+        })}
+        <span>{error && errorMessage}</span>
+      </section>
+      <section className="bank-log">
+        <h1>Ultimas movimentações</h1>
+        {transactions.length === 0 && "Ainda não há transações."}
+      </section>
+    </section>
   )
 }
