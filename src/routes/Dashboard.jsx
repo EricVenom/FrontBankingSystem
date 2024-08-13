@@ -1,5 +1,5 @@
 import { Outlet, Link } from 'react-router-dom';
-import { getCookie, deleteCookie } from '../utils/storage';
+import { deleteCookie } from '../utils/storage';
 import './Dashboard.css';
 import { Button } from '@mui/material';
 import { useContext, useEffect, useState } from 'react';
@@ -8,6 +8,8 @@ import HomeIcon from '@mui/icons-material/Home';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { loggedUserContext } from '../contexts/UserContext';
+import ProfileModal from '../components/ProfileModal';
+import { getCookie } from '../utils/storage';
 
 export default function Dashboard() {
 
@@ -19,7 +21,11 @@ export default function Dashboard() {
 
     const fetchClient = async (email) => {
       try {
-        const { data: client } = await api.get(`/client/user/${email}`);
+        const { data: client } = await api.get(`/client/user/${email}`, {
+          headers: {
+            Authorization: `Bearer ${getCookie("auth")}`
+          }
+        });
         // console.log(client);
         client && setLoggedUser({ ...loggedUser, ...client })
         return client;
@@ -46,8 +52,8 @@ export default function Dashboard() {
       <header>
         <h1>ACCBANK</h1>
         <section>
-          <Button variant="outlined"><AccountCircleIcon /></Button>
-          <Button><LogoutIcon /></Button>
+          <Button variant="outlined" onClick={() => alert('perfil clicado')}><AccountCircleIcon /></Button>
+
         </section>
       </header>
       <section className='fake-header'>

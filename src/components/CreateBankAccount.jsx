@@ -14,7 +14,11 @@ export default function CreateBankAccount() {
     useEffect(() => {
         const getAllAgency = async () => {
             try {
-                const { data } = await api.get("/agency");
+                const { data } = await api.get("/agency", {
+                    headers: {
+                        Authorization: `Bearer ${getCookie("auth")}`
+                    }
+                });
                 data && setAllAgency(data);
             } catch (error) {
                 console.log(error);

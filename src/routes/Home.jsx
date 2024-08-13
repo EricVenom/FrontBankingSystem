@@ -18,7 +18,11 @@ export default function Home() {
   useEffect(() => {
     const getClientInfo = async (email) => {
       try {
-        const { data: client } = await api.get(`/client/user/${email}`);
+        const { data: client } = await api.get(`/client/user/${email}`, {
+          headers: {
+            Authorization: `Bearer ${getCookie("auth")}`
+          }
+        });
         return client;
       } catch (error) {
         setErrorMessage("Erro ao tentar pegar os dados do cliente.");
@@ -28,7 +32,11 @@ export default function Home() {
 
     const getClientBankAccounts = async (id) => {
       try {
-        const { data } = await api.get(`/account/client/${id}`);
+        const { data } = await api.get(`/account/client/${id}`, {
+          headers: {
+            Authorization: `Bearer ${getCookie("auth")}`
+          }
+        });
         return data;
       } catch (error) {
         setErrorMessage("Erro ao tentar pegar dados do banco.");
