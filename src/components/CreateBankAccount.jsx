@@ -45,8 +45,8 @@ export default function CreateBankAccount() {
     }
 
     return (
-        <>
-            <fieldset>
+        <div className='backdrop'>
+            <fieldset className='fdst-new-account'>
                 <form className='new-account'>
                     <legend>Abra sua conta:</legend>
                     <select
@@ -74,6 +74,6 @@ export default function CreateBankAccount() {
                     <Button variant='contained' onClick={handleSubmit}>Confirmar</Button>
                 </form>
             </fieldset>
-        </>
+        </div>
     )
 }

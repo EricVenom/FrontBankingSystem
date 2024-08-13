@@ -40,3 +40,19 @@ a {
   color: rgb(21, 155, 191);
   font-weight: 700;
 }
+
+.backdrop {
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  width: 100vw;
+  min-height: 100vh;
+
+  overflow: hidden;
+
+  top: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, .4);
+}

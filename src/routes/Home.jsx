@@ -62,14 +62,23 @@ export default function Home() {
     const fetchTransactions = async () => {
       try {
         if (bankAccounts.length > 0) {
-          const { data } = await api.get(`/transaction/${bankAccounts[0].id}`, {
-            headers: {
-              Authorization: `Bearer ${getCookie("auth")}`
-            }
-          });
-          if (data) setTransactions(data);
+          // Fazendo as duas requisições em paralelo
+          const requests = bankAccounts.map(account =>
+            api.get(`/transaction/${account.id}`, {
+              headers: {
+                Authorization: `Bearer ${getCookie("auth")}`
+              }
+            })
+          );
+
+          const responses = await Promise.all(requests);
+          const allTransactions = responses
+            .map(response => response.data)
+            .flat(); // combinar os arrays de transações
+
+
+          setTransactions(allTransactions);
         }
-        console.log("Transações:", transactions);
       } catch (error) {
         console.error("Erro ao buscar transações:", error);
       }
@@ -82,7 +91,7 @@ export default function Home() {
     <section className="home-container">
       <section className="bank-info">
         {bankAccounts.length === 0 && <CreateBankAccount />}
-        {bankAccounts.map((e) => {
+        {bankAccounts.length > 0 && bankAccounts.map((e) => {
           return (
             <Card key={e.id} type={e.accountType} balance={e.balance} />
           )
@@ -93,8 +102,8 @@ export default function Home() {
       </section>
       <section className="bank-log">
         <h3>Ultimas movimentações</h3>
-        {transactions.length === 0 && "Ainda não há transações."}
         <BasicTable transactions={transactions} />
+        {transactions.length === 0 && "Ainda não há transações."}
       </section>
     </section>
   )

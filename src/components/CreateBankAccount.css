@@ -1,7 +1,8 @@
-fieldset {
-    width: 100%;
+.fdst-new-account {
     display: flex;
     align-items: center;
+    border: none;
+    width: 65%;
 }
 
 .new-account {
@@ -11,8 +12,7 @@ fieldset {
     gap: 1rem;
     padding: 1rem;
 
-    background-color: rgb(94, 94, 94, .08);
+    background-color: white;
     border: 2px solid rgb(94, 94, 94, .03);
-    box-shadow: 1px 1px 20px #b2b9bb;
     border-radius: 7px;
 }

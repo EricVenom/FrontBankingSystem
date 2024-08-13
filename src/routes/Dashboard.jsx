@@ -15,6 +15,7 @@ export default function Dashboard() {
 
   const { loggedUser, setLoggedUser } = useContext(loggedUserContext);
   const [client, setClient] = useState({});
+  const [isModalActive, setIsModalActive] = useState(false);
 
 
   useEffect(() => {
@@ -52,8 +53,8 @@ export default function Dashboard() {
       <header>
         <h1>ACCBANK</h1>
         <section>
-          <Button variant="outlined" onClick={() => alert('perfil clicado')}><AccountCircleIcon /></Button>
-
+          <Button variant="outlined" onClick={() => setIsModalActive(true)}><AccountCircleIcon /></Button>
+          {isModalActive && <ProfileModal setIsModalActive={setIsModalActive} />}
         </section>
       </header>
       <section className='fake-header'>
