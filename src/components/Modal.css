@@ -71,12 +71,11 @@
     background-color: rgba(0, 0, 0, .2);
 }
 
-fieldset {
+.fdst-cadastro {
     display: flex;
     flex-direction: column;
     align-items: stretch;
     justify-content: stretch;
-
     border: none;
 
     gap: .7rem;

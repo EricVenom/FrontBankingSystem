@@ -150,7 +150,7 @@ function Modal({ setModalActive }) {
           <p onClick={clickHandler}>x</p>
         </div>
         <form onSubmit={handleSubmit}>
-          <fieldset>
+          <fieldset className='fdst-cadastro'>
             <legend>
               Complete os campos para abrir sua conta ACCBank.
               <br />

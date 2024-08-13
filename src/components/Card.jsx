@@ -4,6 +4,7 @@ import api from '../services/api'
 import './Card.css';
 
 export default function Card({ pix, type, balance }) {
+    const { loggedUser } = useContext(loggedUserContext);
 
     return (
         <>
@@ -18,7 +19,7 @@ export default function Card({ pix, type, balance }) {
 
             {pix && <div className="bank-card">
                 <span>Área pix</span><br />
-                <strong>Pagar</strong><br />
+                <strong>Pagar: (Id usuario) {loggedUser?.user_id}</strong><br />
                 <strong>Gerenciar chaves: ver todas, criar e deletar</strong>
             </div>
 

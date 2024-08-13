@@ -1,8 +1,6 @@
 import { createContext, useState, useEffect } from 'react';
 
-export const loggedUserContext = createContext({
-    email: ""
-});
+export const loggedUserContext = createContext({});
 
 export const LoggedUserContextProvider = ({ children }) => {
     const [loggedUser, setLoggedUser] = useState(null);

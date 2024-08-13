@@ -6,10 +6,12 @@ import { useContext, useState } from "react";
 import { loggedUserContext } from '../contexts/UserContext.jsx'
 import { setCookie } from "../utils/storage.js"
 import api from '../services/api';
+import LinearIndeterminate from '../components/LinearIndeterminate.jsx'
 
 export default function LoginPage() {
   const navigate = useNavigate();
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [user, setUser] = useState(
     {
       email: "",
@@ -24,6 +26,7 @@ export default function LoginPage() {
     const { email, password } = user;
     if (email && password) {
       try {
+        setLoading(true);
         const { data } = await api.post('/auth', {
           email,
           password
@@ -38,6 +41,8 @@ export default function LoginPage() {
       } catch (e) {
         setError(true);
         console.error(e)
+      } finally {
+        setLoading(false);
       }
     }
 
@@ -75,7 +80,7 @@ export default function LoginPage() {
                 {error && "Credenciais inválidas"}
               </span>
               <BtnCadastro textoDoBotao="Entrar" setModalActive={() => { }} />
-
+              {loading && <LinearIndeterminate />}
               <a href="/">Voltar à página inicial</a>
             </form>
           </fieldset>

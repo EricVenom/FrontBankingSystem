@@ -11,15 +11,17 @@ import { loggedUserContext } from '../contexts/UserContext';
 
 export default function Dashboard() {
 
-  const { loggedUser } = useContext(loggedUserContext);
+  const { loggedUser, setLoggedUser } = useContext(loggedUserContext);
   const [client, setClient] = useState({});
+
 
   useEffect(() => {
 
     const fetchClient = async (email) => {
       try {
         const { data: client } = await api.get(`/client/user/${email}`);
-        console.log(client);
+        // console.log(client);
+        client && setLoggedUser({ ...loggedUser, ...client })
         return client;
       } catch (error) {
         console.log(error)
