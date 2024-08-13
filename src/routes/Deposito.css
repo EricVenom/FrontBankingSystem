@@ -1,0 +1,11 @@
+.deposito {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    gap: .5rem;
+}
+
+.deposito input:focus {
+    outline: 2px solid rgb(21, 155, 191);
+    background-color: light-dark(rgb(232, 240, 254), rgba(70, 90, 126, 0.4)) !important;
+}

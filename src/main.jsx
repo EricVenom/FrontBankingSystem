@@ -1,14 +1,15 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import { createBrowserRouter, RouterProvider } from "react-router-dom"
-import { LoggedUserContextProvider } from './contexts/UserContext'
-import App from './routes/App'
-import './index.css'
-import ErrorPage from './error-page'
-import LoginPage from './routes/Login'
-import Dashboard from './routes/Dashboard'
-import Home from './routes/Home'
-import PrivateRoute from './routes/PrivateRoute'
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { LoggedUserContextProvider } from './contexts/UserContext';
+import App from './routes/App';
+import './index.css';
+import ErrorPage from './error-page';
+import LoginPage from './routes/Login';
+import Dashboard from './routes/Dashboard';
+import Home from './routes/Home';
+import Deposito from './routes/Deposito';
+import PrivateRoute from './routes/PrivateRoute';
 
 const router = createBrowserRouter([
   {
@@ -38,7 +39,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashboard/transactions/deposit",
-        element: <h1>PAGINA DE DEPOSITO</h1>
+        element: <Deposito />
       },
       {
         path: "/dashboard/transactions/transfer",
