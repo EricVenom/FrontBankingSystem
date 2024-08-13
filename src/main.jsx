@@ -7,10 +7,11 @@ import './index.css';
 import ErrorPage from './error-page';
 import LoginPage from './routes/Login';
 import Dashboard from './routes/Dashboard';
+import PrivateRoute from './routes/PrivateRoute';
 import Home from './routes/Home';
 import Deposito from './routes/Deposito';
-import PrivateRoute from './routes/PrivateRoute';
 import Saque from './routes/Saque';
+import Ted from './routes/Ted';
 
 const router = createBrowserRouter([
   {
@@ -44,7 +45,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashboard/transactions/transfer",
-        element: <h1>PAGINA DE TRANSFERENCIA</h1>
+        element: <Ted />
       }
     ]
   }

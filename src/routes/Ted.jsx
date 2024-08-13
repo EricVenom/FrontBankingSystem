@@ -1,13 +1,14 @@
-import { Button } from '@mui/material';
-import "./Deposito.css";
-import LinearIndeterminate from '../components/LinearIndeterminate';
-import api from '../services/api';
+import "./Ted.css";
 import { useState } from 'react';
+import { Button } from '@mui/material';
+import api from "../services/api";
 import { getCookie } from "../utils/storage";
+import LinearIndeterminate from "../components/LinearIndeterminate";
 
-export default function () {
+export default function Ted() {
     const [depositData, setDepositData] = useState({
         accountType: "",
+        receiverId: "",
         value: 0
     });
     const [loading, setLoading] = useState(false);
@@ -16,8 +17,9 @@ export default function () {
         e.preventDefault();
         try {
             setLoading(true);
-            const { status } = await api.post("/transaction/deposit", {
+            const { status } = await api.post("/transaction/transfer", {
                 accountType: depositData.accountType,
+                receiverId: depositData.receiverId,
                 value: depositData.value
             }, {
                 headers: {
@@ -36,8 +38,8 @@ export default function () {
     return (
         <>
             <form className="deposito">
-                <h2>Depósito</h2>
-                <label>Informe a quantidade que deseja depositar:</label>
+                <h2>Transferência Eletrônica Disponível</h2>
+                <label>Informe a quantidade que deseja transferir:</label>
                 <input
                     type="number"
                     placeholder='(Máx. 1000R$)'
@@ -46,6 +48,9 @@ export default function () {
                         e.target.value = e.target.value.replace(/\D/g, '');
                     }}
                 /><br />
+
+                <label>ID da conta destinatária</label>
+                <input type="text" onChange={e => setDepositData({ ...depositData, receiverId: e.target.value })} /><br />
 
                 <label>Qual o tipo da conta?</label>
                 <select
@@ -56,7 +61,7 @@ export default function () {
                     <option value="SAVINGS">2. Poupança</option>
                 </select><br />
 
-                <Button variant='text' onClick={handleSubmit}>Depositar</Button>
+                <Button variant='text' onClick={handleSubmit}>Transferir</Button>
                 {loading && <LinearIndeterminate />}
             </form>
         </>
