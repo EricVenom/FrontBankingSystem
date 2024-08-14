@@ -8,12 +8,13 @@ import { getCookie } from '../utils/storage';
 import BasicTable from '../components/BasicTable';
 
 export default function Home() {
-  const { loggedUser } = useContext(loggedUserContext);
+  const { loggedUser, loggedBankAccounts, setLoggedBankAccounts, setLoggedPixKeys } = useContext(loggedUserContext);
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [client, setClient] = useState({});
   const [bankAccounts, setBankAccounts] = useState([]);
   const [transactions, setTransactions] = useState([]);
+  const [keyList, setKeyList] = useState();
 
   useEffect(() => {
     const getClientInfo = async (email) => {
@@ -51,6 +52,10 @@ export default function Home() {
           setClient(clientData);
           const accounts = await getClientBankAccounts(clientData.id);
           accounts && setBankAccounts(accounts);
+          setLoggedBankAccounts([...accounts]);
+
+          // const accountIds = accounts.map(account => account.id);
+          // localStorage.setItem('bankAccountIds', JSON.stringify(accountIds));
         }
       }
     }
@@ -86,13 +91,43 @@ export default function Home() {
     fetchTransactions();
   }, [bankAccounts]);
 
+  useEffect(() => {
+    const fetchingKeys = async () => {
+      try {
+        if (loggedBankAccounts?.length > 0) {
+          const requests = loggedBankAccounts.map(account =>
+            api.get(`/pix-key/account/${account.id}`, {
+              headers: {
+                Authorization: `Bearer ${getCookie("auth")}`
+              }
+            })
+          );
+
+          const responses = await Promise.all(requests);
+
+          const allPixKeys = responses
+            .map(response => response.data)
+            .flat();
+
+          setKeyList(allPixKeys);
+        }
+
+        keyList && setLoggedPixKeys(keyList)
+      } catch (error) {
+        console.log("fetchingKeys():", error);
+      }
+    }
+
+    fetchingKeys();
+  }, [loggedBankAccounts]);
+
   return (
     <section className="home-container">
       <section className="bank-info">
         {bankAccounts.length === 0 && <CreateBankAccount />}
         {bankAccounts.length > 0 && bankAccounts.map((e) => {
           return (
-            <Card key={e.id} type={e.accountType} balance={e.balance} />
+            <Card key={e.id} type={e.accountType} balance={e.balance} number={e.number} />
           )
         })}
 

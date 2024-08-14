@@ -4,6 +4,7 @@ import LinearIndeterminate from '../components/LinearIndeterminate';
 import api from '../services/api';
 import { getCookie } from "../utils/storage";
 import { Button } from '@mui/material';
+import { useNavigate } from "react-router-dom";
 
 export default function Saque() {
 
@@ -12,6 +13,8 @@ export default function Saque() {
         value: 0
     });
     const [loading, setLoading] = useState(false);
+
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -27,6 +30,7 @@ export default function Saque() {
             });
 
             status && setLoading(false);
+            navigate("/dashboard");
         } catch (error) {
             console.log(error);
         } finally {

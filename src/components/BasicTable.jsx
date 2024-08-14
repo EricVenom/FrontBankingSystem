@@ -40,9 +40,15 @@ export default function BasicTable({ transactions }) {
                             <TableCell component="th" scope="row">
                                 {row.transactionType}
                             </TableCell>
-                            <TableCell align="right">{row.amount}</TableCell>
-                            <TableCell align="right">{row.transactionDate}</TableCell>
-                            <TableCell align="right">{row.balanceCurrent}</TableCell>
+                            <TableCell align="right">R$ {(Math.round(row.amount * 100) / 100).toFixed(2)}</TableCell>
+                            <TableCell align="right">{new Date(row.transactionDate).toLocaleString('pt-BR', {
+                                day: '2-digit',
+                                month: '2-digit',
+                                year: 'numeric',
+                                hour: '2-digit',
+                                minute: '2-digit'
+                            })}</TableCell>
+                            <TableCell align="right">R$ {(Math.round(row.balanceCurrent * 100) / 100).toFixed(2)}</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>

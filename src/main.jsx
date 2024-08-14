@@ -12,6 +12,7 @@ import Home from './routes/Home';
 import Deposito from './routes/Deposito';
 import Saque from './routes/Saque';
 import Ted from './routes/Ted';
+import SendPix from './routes/SendPix';
 
 const router = createBrowserRouter([
   {
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/transactions/transfer",
         element: <Ted />
+      },
+      {
+        path: "/dashboard/transactions/pix",
+        element: <SendPix />
       }
     ]
   }

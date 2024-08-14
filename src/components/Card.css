@@ -1,9 +1,35 @@
 .bank-card {
     border-radius: 10px;
     width: 22rem;
-    height: 9rem;
     padding: 1rem;
     background-color: rgb(94, 94, 94, .08);
     border: 2px solid rgb(94, 94, 94, .03);
     margin-bottom: 2rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.pix-config {
+    background-color: white;
+    border-radius: 7px;
+    border: none;
+    padding: 1rem;
+
+}
+
+.all-keys {
+    display: flex;
+    gap: 3rem;
+}
+
+.pix-config form {
+    gap: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.pix-key-input {
+    background-color: lightgray;
 }

@@ -4,6 +4,7 @@ import LinearIndeterminate from '../components/LinearIndeterminate';
 import api from '../services/api';
 import { useState } from 'react';
 import { getCookie } from "../utils/storage";
+import { useNavigate } from 'react-router-dom';
 
 export default function () {
     const [depositData, setDepositData] = useState({
@@ -11,6 +12,8 @@ export default function () {
         value: 0
     });
     const [loading, setLoading] = useState(false);
+
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -26,6 +29,7 @@ export default function () {
             });
 
             status && setLoading(false);
+            navigate("/dashboard");
         } catch (error) {
             console.log(error);
         } finally {

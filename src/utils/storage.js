@@ -19,7 +19,7 @@ export function getCookie(name) {
     }
 }
 
-export function deleteCookie(name, path, domain) {
+export function deleteCookie(name, path = "/", domain) {
     if (getCookie(name)) {
         document.cookie = name + "=" +
             ((path) ? ";path=" + path : "") +

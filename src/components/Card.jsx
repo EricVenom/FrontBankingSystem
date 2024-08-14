@@ -1,26 +1,51 @@
 import { loggedUserContext } from '../contexts/UserContext'
 import { useContext, useState } from 'react'
-import api from '../services/api'
-import './Card.css';
+import { Link, Outlet } from 'react-router-dom';
 
-export default function Card({ pix, type, balance }) {
-    const { loggedUser } = useContext(loggedUserContext);
+import PixIcon from '@mui/icons-material/Pix';
+import SavingsIcon from '@mui/icons-material/Savings';
+import BuildIcon from '@mui/icons-material/Build';
+import PaymentsIcon from '@mui/icons-material/Payments';
+import { Button } from '@mui/material';
+import './Card.css';
+import ConfigPix from './ConfigPix';
+
+export default function Card({ pix, type, number, balance }) {
+    const [configPix, setConfigPix] = useState(false);
+    const { loggedBankAccounts } = useContext(loggedUserContext);
 
     return (
         <>
             {!pix && <div className="bank-card">
-                <span>Saldo: <br />
-                    <strong>
-                        {balance ? balance : "00,00"} R$
-                    </strong>
+                <span><SavingsIcon /> {type === "CURRENT" ? "CONTA CORRENTE" : "POUPANÇA"}</span><br />
+                <span>Saldo Total <br />
+                    R$ {balance ? (Math.round(balance * 100) / 100).toFixed(2) : "00,00"}
                 </span> <br />
-                <span>{type === "CURRENT" ? "CONTA CORRENTE" : "POUPANÇA"}</span>
+                <span>
+                    Numero da conta: {number}
+                </span>
             </div>}
 
             {pix && <div className="bank-card">
-                <span>Área pix</span><br />
-                <strong>Pagar: (Id usuario) {loggedUser?.user_id}</strong><br />
-                <strong>Gerenciar chaves: ver todas, criar e deletar</strong>
+                <span><PixIcon /> Área Pix</span><br />
+                <Link to={"/dashboard/transactions/pix"}><Button
+                    variant="outlined"
+                    size="small"
+                    sx={{ gap: "1rem", width: "100%", justifyContent: "start" }}
+                >
+                    <PaymentsIcon /> Transferir
+                </Button></Link>
+
+                <Button
+                    variant="outlined"
+                    size="small"
+                    sx={{ gap: "1rem", width: "100%", justifyContent: "start" }}
+                    onClick={() => setConfigPix(true)}
+                >
+                    <BuildIcon /> Gerenciar chaves
+                </Button>
+                {configPix && <ConfigPix setConfigPix={setConfigPix} />}
+                <Outlet />
             </div>
 
             }

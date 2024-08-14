@@ -3,13 +3,23 @@ import { loggedUserContext } from "../contexts/UserContext"
 import { useContext } from "react";
 import LogoutIcon from '@mui/icons-material/Logout';
 import { Button } from '@mui/material';
+import { deleteCookie } from "../utils/storage";
+import { useNavigate } from "react-router-dom";
 
 export default function ProfileModal({ setIsModalActive }) {
     const { loggedUser } = useContext(loggedUserContext);
+    const navigate = useNavigate();
 
     const clickHandler = (e) => {
         if (e.target === e.currentTarget) {
             setIsModalActive(false);
+        }
+    }
+
+    const handleLogout = (e) => {
+        if (e.target === e.currentTarget) {
+            deleteCookie("auth");
+            navigate("/");
         }
     }
 
@@ -44,7 +54,12 @@ export default function ProfileModal({ setIsModalActive }) {
                         {loggedUser?.telephone && formatPhone(loggedUser?.telephone)}
                     </div>
                 </div>
-                <li><Button size="small" variant="outlined" sx={{ marginTop: "1rem", width: "100%", gap: ".5rem" }}><LogoutIcon /> Sair</Button></li>
+                <li><Button
+                    size="small"
+                    variant="outlined"
+                    sx={{ marginTop: "1rem", width: "100%", gap: ".5rem" }}
+                    onClick={handleLogout}
+                ><LogoutIcon /> Sair</Button></li>
 
             </section>
         </div>

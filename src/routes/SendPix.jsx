@@ -1,17 +1,19 @@
-import "./Ted.css";
-import { useState } from 'react';
 import { Button } from '@mui/material';
-import api from "../services/api";
+import LinearIndeterminate from '../components/LinearIndeterminate';
+import api from '../services/api';
+import { useState, useContext } from 'react';
 import { getCookie } from "../utils/storage";
-import LinearIndeterminate from "../components/LinearIndeterminate";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+import { loggedUserContext } from '../contexts/UserContext'
 
-export default function Ted() {
-    const [depositData, setDepositData] = useState({
+export default function SendPix() {
+    const [pixData, setPixData] = useState({
+        pixKey: "",
         accountType: "",
-        receiverId: "",
         value: 0
     });
+
+    const { loggedBankAccounts } = useContext(loggedUserContext);
     const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
@@ -20,10 +22,10 @@ export default function Ted() {
         e.preventDefault();
         try {
             setLoading(true);
-            const { status } = await api.post("/transaction/transfer", {
-                accountType: depositData.accountType,
-                receiverId: depositData.receiverId,
-                value: depositData.value
+            const { status } = await api.post("/transaction/pix", {
+                pixKey: pixData.pixKey,
+                accountType: pixData.accountType,
+                value: pixData.value
             }, {
                 headers: {
                     Authorization: `Bearer ${getCookie("auth")}`
@@ -42,8 +44,15 @@ export default function Ted() {
     return (
         <>
             <form className="deposito">
-                <h2>Transferência Eletrônica Disponível</h2>
-                <label>Informe a quantidade que deseja transferir:</label>
+                <h2>PIX</h2>
+                <label>Chave Pix:</label>
+                <input
+                    type="text"
+                    placeholder='Chave*'
+                    onChange={e => setDepositData({ ...depositData, pixKey: e.target.value })}
+                /><br />
+
+                <label>Valor:</label>
                 <input
                     type="number"
                     placeholder='(Máx. 1000R$)'
@@ -53,19 +62,17 @@ export default function Ted() {
                     }}
                 /><br />
 
-                <label>ID da conta destinatária</label>
-                <input type="text" onChange={e => setDepositData({ ...depositData, receiverId: e.target.value })} /><br />
-
-                <label>Qual o tipo da conta?</label>
+                <label>De qual conta enviar?</label>
                 <select
                     onChange={e => setDepositData({ ...depositData, accountType: e.target.value })}
                 >
                     <option value=""></option>
-                    <option value="CURRENT">1. Conta Corrente</option>
-                    <option value="SAVINGS">2. Poupança</option>
+                    {loggedBankAccounts.map(a => <>
+                        <option value={a.accountType}>{a.accountType === "SAVINGS" ? "POUPANÇA" : "CONTA CORRENTE"}</option>
+                    </>)}
                 </select><br />
 
-                <Button variant='text' onClick={handleSubmit}>Transferir</Button>
+                <Button variant='text' onClick={handleSubmit}>Pagar</Button>
                 {loading && <LinearIndeterminate />}
             </form>
         </>
