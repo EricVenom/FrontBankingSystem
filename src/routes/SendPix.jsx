@@ -49,14 +49,14 @@ export default function SendPix() {
                 <input
                     type="text"
                     placeholder='Chave*'
-                    onChange={e => setDepositData({ ...depositData, pixKey: e.target.value })}
+                    onChange={e => setPixData({ ...pixData, pixKey: e.target.value })}
                 /><br />
 
                 <label>Valor:</label>
                 <input
                     type="number"
                     placeholder='(Máx. 1000R$)'
-                    onChange={e => setDepositData({ ...depositData, value: e.target.value })}
+                    onChange={e => setPixData({ ...pixData, value: e.target.value })}
                     onInput={(e) => {
                         e.target.value = e.target.value.replace(/\D/g, '');
                     }}
@@ -64,7 +64,7 @@ export default function SendPix() {
 
                 <label>De qual conta enviar?</label>
                 <select
-                    onChange={e => setDepositData({ ...depositData, accountType: e.target.value })}
+                    onChange={e => setPixData({ ...pixData, accountType: e.target.value })}
                 >
                     <option value=""></option>
                     {loggedBankAccounts.map(a => <>
