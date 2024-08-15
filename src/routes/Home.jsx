@@ -137,6 +137,7 @@ export default function Home() {
           )
         })}
 
+
         <Card pix={true} />
         <span>{error && errorMessage}</span>
       </section>

@@ -72,13 +72,35 @@ function Modal({ setModalActive }) {
 
   const addAddress = async (cep, number, street, district) => {
     try {
-      const { data: address } = await api.post("/address", {
-        cep,
-        number,
-        street,
-        district
-      });
-      return address;
+      if (cep && number && street && district) {
+        const { data: address } = await api.post("/address", {
+          cep,
+          number,
+          street,
+          district
+        }, {
+          headers: {
+            Authorization: `Bearer ${getCookie("auth")}`
+          }
+        });
+        return address;
+        console.log("Endereço cadastrado")
+      } else {
+        const { data: address } = await api.post("/address", {
+          cep,
+          number,
+          street: "Rua",
+          district: "Bairro"
+        }, {
+          headers: {
+            Authorization: `Bearer ${getCookie("auth")}`
+          }
+        });
+        return address;
+        console.log("Endereço cadastrado com gambiarra")
+      }
+
+
     } catch (error) {
       throw new Error("Erro ao adicionar endereço.");
     }

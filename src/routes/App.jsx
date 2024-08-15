@@ -32,7 +32,7 @@ function App() {
       </main>
 
       <footer>
-        <p>© 2024 ACCBank Instituição de Pagamento S/A. CNPJ 11.111.111/1111-11</p>
+        <p>© 2024 ACCBank Instituição de Pagamento S/A. CNPJ 11.111.111/1111-11. V1.0.0</p>
       </footer>
     </div>
   )

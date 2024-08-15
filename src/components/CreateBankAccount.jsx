@@ -3,6 +3,8 @@ import { Button } from '@mui/material'
 import api from '../services/api'
 import './CreateBankAccount.css'
 import { getCookie } from '../utils/storage'
+import { useNavigate } from 'react-router-dom'
+import LinearIndeterminate from "../components/LinearIndeterminate"
 
 export default function CreateBankAccount() {
     const [allAgency, setAllAgency] = useState([]);
@@ -10,6 +12,10 @@ export default function CreateBankAccount() {
         accountType: "",
         agencyId: ""
     });
+
+    const [loading, setLoading] = useState(false);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         const getAllAgency = async () => {
@@ -29,8 +35,10 @@ export default function CreateBankAccount() {
     }, [])
 
     const handleSubmit = async (e) => {
+        setLoading(true);
         e.preventDefault();
         try {
+            setLoading(true);
             await api.post("/account", {
                 accountType: newAccount.accountType,
                 agencyId: newAccount.agencyId
@@ -39,8 +47,12 @@ export default function CreateBankAccount() {
                     Authorization: `Bearer ${getCookie("auth")}`
                 }
             });
+
+            navigate("/dashboard/transactions/deposit");
         } catch (error) {
             console.log(error)
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -73,6 +85,7 @@ export default function CreateBankAccount() {
                     </select>
                     <Button variant='contained' onClick={handleSubmit}>Confirmar</Button>
                 </form>
+                {loading && <LinearIndeterminate />}
             </fieldset>
         </div>
     )
