@@ -29,7 +29,7 @@ function Modal({ setModalActive }) {
   };
 
   const cep = axios.create({
-    baseURL: 'http://viacep.com.br/ws/',
+    baseURL: 'https://viacep.com.br/ws/',
     timeout: 10000,
     headers: { 'Content-Type': 'application/json' }
   });

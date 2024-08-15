@@ -6,6 +6,7 @@ import { loggedUserContext } from '../contexts/UserContext';
 import api from '../services/api'
 import { getCookie } from '../utils/storage';
 import BasicTable from '../components/BasicTable';
+import LinearIndeterminate from '../components/LinearIndeterminate';
 
 export default function Home() {
   const { loggedUser, loggedBankAccounts, setLoggedBankAccounts, setLoggedPixKeys } = useContext(loggedUserContext);
@@ -15,6 +16,8 @@ export default function Home() {
   const [bankAccounts, setBankAccounts] = useState([]);
   const [transactions, setTransactions] = useState([]);
   const [keyList, setKeyList] = useState();
+
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const getClientInfo = async (email) => {
@@ -94,6 +97,7 @@ export default function Home() {
   useEffect(() => {
     const fetchingKeys = async () => {
       try {
+        setLoading(true);
         if (loggedBankAccounts?.length > 0) {
           const requests = loggedBankAccounts.map(account =>
             api.get(`/pix-key/account/${account.id}`, {
@@ -115,6 +119,8 @@ export default function Home() {
         keyList && setLoggedPixKeys(keyList)
       } catch (error) {
         console.log("fetchingKeys():", error);
+      } finally {
+        setLoading(false);
       }
     }
 
@@ -139,6 +145,8 @@ export default function Home() {
         <BasicTable transactions={transactions} />
         {transactions.length === 0 && "Ainda não há transações."}
       </section>
+
+      {loading && <LinearIndeterminate />}
     </section>
   )
 }
